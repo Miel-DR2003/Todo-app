@@ -1,0 +1,7 @@
+@tailwind base;
+
+/* Tailwind's component classes (buttons, forms, etc.) */
+@tailwind components;
+
+/* Tailwind's utility classes (margins, padding, etc.) */
+@tailwind utilities
