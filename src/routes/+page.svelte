@@ -24,7 +24,7 @@
 
 <NewForm />
 
-{#each todoList as todoItem}
+{#each todoList as todoItem (todoItem.id)}
     <Collapsible categorieName={todoItem.categorie}>
         <ul>
             <Todo todo={todoItem} />

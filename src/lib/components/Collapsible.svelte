@@ -7,7 +7,7 @@
     }
 </script>
 
-<div class="collapsible">
+<div class="collapsible px-2">
     <div class="header" on:click={toggle}>
         {categorieName}
         <span>{isOpen ? "▲" : "▼"}</span>
