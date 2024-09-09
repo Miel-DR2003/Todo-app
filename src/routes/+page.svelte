@@ -1,6 +1,8 @@
 <script>
     import { Todo } from "$lib";
     import { NewForm } from "$lib";
+    import { Collapsible } from "$lib";
+
     let todoList = [
         {
             id: 1,
@@ -23,8 +25,9 @@
 <NewForm />
 
 {#each todoList as todoItem}
-    <h3 class="p-2">{todoItem.categorie}</h3>
-    <ul>
-        <Todo todo={todoItem} />
-    </ul>
+    <Collapsible categorieName={todoItem.categorie}>
+        <ul>
+            <Todo todo={todoItem} />
+        </ul>
+    </Collapsible>
 {/each}

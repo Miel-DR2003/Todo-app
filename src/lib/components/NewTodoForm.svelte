@@ -1,5 +1,7 @@
 <script>
+    import { Dropdown } from "$lib";
     let textInput = "";
+    let selectedDate = "";
     function addTodo() {
         //todo
     }
@@ -13,6 +15,8 @@
     <!-- display: flex; -->
     <div class="flex gap-2">
         <input type="text" bind:value={textInput} />
+        <input type="datetime-local" bind:value={selectedDate} />
+        <Dropdown />
         <!-- width 200px; -->
         <button class="w-52" on:click={addTodo}>Add</button>
     </div>
