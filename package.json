@@ -18,6 +18,8 @@
 	"type": "module",
 	"dependencies": {
 		"autoprefixer": "^10.4.20",
+		"dotenv": "^16.4.5",
+		"mysql2": "^3.11.2",
 		"postcss": "^8.4.45"
 	}
 }

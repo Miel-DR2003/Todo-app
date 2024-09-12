@@ -3,16 +3,8 @@
     import { NewForm } from "$lib";
     import { Collapsible } from "$lib";
 
-    let todoList = [
-        {
-            id: 1,
-            content: "description of todo",
-            categorie: "testCategorie",
-            endDate: new Date(),
-            editing: false,
-            checked: false,
-        },
-    ]; //array of todo's
+    export let data;
+    const { todoList } = data;
 </script>
 
 <svelte:head>
@@ -22,12 +14,22 @@
     />
 </svelte:head>
 
-<NewForm />
+<div>
+    <NewForm />
+    {#if todoList.error}
+        <p>Error loading items: {todoList.error}</p>
+    {/if}
+    {#if todoList.length == 0}
+        <p>Geen todo's</p>
+    {/if}
 
-{#each todoList as todoItem (todoItem.id)}
-    <Collapsible categorieName={todoItem.categorie}>
-        <ul>
-            <Todo todo={todoItem} />
-        </ul>
-    </Collapsible>
-{/each}
+    {#if todoList && todoList.length > 0}
+        {#each todoList as todoItem (todoItem.id)}
+            <Collapsible categorieName={todoItem.categorie}>
+                <ul>
+                    <Todo todo={todoItem} />
+                </ul>
+            </Collapsible>
+        {/each}
+    {/if}
+</div>
