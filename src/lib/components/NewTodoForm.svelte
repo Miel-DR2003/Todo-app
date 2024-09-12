@@ -3,6 +3,7 @@
     import { enhance } from "$app/forms";
     let textInput = "";
     let selectedDate = "";
+    let selectedCategorie = "";
     let form;
     let creating = false;
 </script>
@@ -27,13 +28,19 @@
             <h2 class="text-center">Todo list</h2>
             <p>Enter new ToDo here</p>
             <div class="flex gap-2">
-                <input disabled={creating} type="text" bind:value={textInput} />
+                <input
+                    disabled={creating}
+                    type="text"
+                    name="content"
+                    bind:value={textInput}
+                />
                 <input
                     disabled={creating}
                     type="datetime-local"
+                    name="endDate"
                     bind:value={selectedDate}
                 />
-                <Dropdown />
+                <Dropdown name="categorie" bind:selected={selectedCategorie} />
                 <button class="w-52" type="submit">Add</button>
             </div>
             {#if creating}

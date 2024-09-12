@@ -11,17 +11,22 @@ const pool = mysql.createPool({
 });
 
 export const actions = {
-    create: async (request) => {
+    create: async ({ request }) => {
         const data = await request.formData();
+        const content = data.get('content');
+        const categorie = data.get('categorie');
+        const endDate = data.get('endDate') || null;
+
         const connection = await pool.getConnection();
         try {
             await connection.query(
                 'INSERT INTO todo (content, categorie, endDate, editing, checked) VALUES (?, ?, ?, ?, ?)',
-                [data.textInput, data.categorie, data.selectedDate, false, false]
+                [content, categorie, endDate, false, false]
             );
 
             return { success: true };
         } catch (error) {
+            console.error('Database error:', error);
             return fail(422, {
                 description: data.get('description'),
                 error: error.message

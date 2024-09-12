@@ -4,10 +4,7 @@
         todo.editing = isEditing;
     }
     //update this code
-    function deleteTodo(i) {
-        todoList.splice(i, 1);
-        todoList = todoList;
-    }
+    function deleteTodo(i) {}
 </script>
 
 <div class="flex items-baseline p-5 w-[700] mx-auto gap-2">
@@ -28,6 +25,6 @@
         {:else}
             <button on:click={() => setEditing(true)}>Edit</button>
         {/if}
-        <button on:click={deleteTodo}>Delete</button>
+        <button on:click={deleteTodo(todo.todoId)}>Delete</button>
     </div>
 </div>
