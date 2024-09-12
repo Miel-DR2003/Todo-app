@@ -25,6 +25,9 @@
         {:else}
             <button on:click={() => setEditing(true)}>Edit</button>
         {/if}
-        <button on:click={deleteTodo(todo.todoId)}>Delete</button>
+        <form method="post" action="?/delete">
+            <input type="hidden" name="todoId" value={todo.todoId} />
+            <button type="submit">Delete</button>
+        </form>
     </div>
 </div>

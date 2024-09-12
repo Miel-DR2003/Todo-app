@@ -36,8 +36,24 @@ export const actions = {
         }
 
     },
-    delete: async (request) => {
-        //todo
+    delete: async ({ request }) => {
+        const data = await request.formData();
+        const todoId = data.get('todoId');
+
+        const connection = await pool.getConnection();
+        try {
+            await connection.query(
+                'DELETE FROM todo WHERE todoId = ?',
+                [todoId]
+            );
+
+            return { success: true };
+        } catch (err) {
+            console.error('Database error:', err);
+            return fail(500, { error: 'Database error' });
+        } finally {
+            connection.release();
+        }
     }
 };
 
