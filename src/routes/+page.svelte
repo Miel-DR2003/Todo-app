@@ -6,21 +6,19 @@
     export let data;
     const { todoList } = data;
     // Group todo items by category
-    let groupedTodos = [];
-    let currentGroup = [];
 
-    for (let i = 0; i < todoList.length; i++) {
-        if (i === 0 || todoList[i].categorie !== todoList[i - 1].categorie) {
-            if (currentGroup.length > 0) {
-                groupedTodos.push(currentGroup);
+    function groupByCategory(todos) {
+        const grouped = {};
+        todos.forEach((todo) => {
+            if (!grouped[todo.categorie]) {
+                grouped[todo.categorie] = [];
             }
-            currentGroup = [];
-        }
-        currentGroup.push(todoList[i]);
+            grouped[todo.categorie].push(todo);
+        });
+        return Object.values(grouped);
     }
-    if (currentGroup.length > 0) {
-        groupedTodos.push(currentGroup);
-    }
+
+    const groupedTodos = groupByCategory(todoList);
 </script>
 
 <svelte:head>
@@ -33,11 +31,11 @@
 <div>
     <NewForm />
     {#if todoList.error}
-        <p>Error loading items: {todoList.error}</p>
+        <p class="px-2">Error loading items: {todoList.error}</p>
     {/if}
 
     {#if todoList.length == 0}
-        <p>Geen todo's</p>
+        <p class="px-2">Geen todo's</p>
     {/if}
 
     {#each groupedTodos as group}
