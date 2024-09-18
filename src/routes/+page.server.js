@@ -36,6 +36,25 @@ export const actions = {
         }
 
     },
+    /*
+    UPDATE `todoapp`.`todo` SET `editing` = '1' WHERE (`todoId` = '15');
+    */
+    update: async ({ request }) => {
+        const data = await request.formData();
+        const todoId = data.get('todoId');
+        const newContent = data.get('newContent');
+
+        const connection = await pool.getConnection();
+        try {
+            await connection.query('UPDATE todo SET content = ? WHERE todoId = ?', [newContent, todoId]);
+            return { success: true };
+        } catch (err) {
+            console.error('Database error:', err);
+            return fail(500, { error: 'Database error' });
+        } finally {
+            connection.release();
+        }
+    },
     delete: async ({ request }) => {
         const data = await request.formData();
         const todoId = data.get('todoId');
