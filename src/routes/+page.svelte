@@ -6,7 +6,6 @@
     export let data;
     const { todoList } = data;
     // Group todo items by category
-
     function groupByCategory(todos) {
         const grouped = {};
         todos.forEach((todo) => {
@@ -18,6 +17,26 @@
         return Object.values(grouped);
     }
 
+    function checkDate(todos) {
+        const now = new Date();
+        const fiveDaysBeforeNow = new Date();
+        fiveDaysBeforeNow.setDate(now.getDate() - 5);
+        const deadlineIsNear = [];
+        todos.forEach((todo) => {
+            if (todo.endDate > fiveDaysBeforeNow) {
+                deadlineIsNear.push(todo);
+            }
+        });
+        return deadlineIsNear;
+    }
+
+    function showAlert(content) {
+        if (typeof window !== "undefined") {
+            alert(`The deadline for ${content} is almost near`);
+        }
+    }
+
+    const deadlineIsNear = checkDate(todoList);
     const groupedTodos = groupByCategory(todoList);
 </script>
 
@@ -29,6 +48,10 @@
 </svelte:head>
 
 <div>
+    {#each deadlineIsNear as todo}
+        {showAlert(todo.content)}
+    {/each}
+
     <NewForm />
     {#if todoList.error}
         <p class="px-2">Error loading items: {todoList.error}</p>
