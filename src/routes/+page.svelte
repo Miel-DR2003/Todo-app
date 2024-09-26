@@ -16,14 +16,15 @@
         });
         return Object.values(grouped);
     }
-
+    //probeer dit mss aan te passen door met een interval te werken date < deadline < today
     function checkDate(todos) {
         const now = new Date();
-        const fiveDaysBeforeNow = new Date();
-        fiveDaysBeforeNow.setDate(now.getDate() - 5);
+        const tenDaysBeforeNow = new Date();
+        tenDaysBeforeNow.setDate(now.getDate() - 10);
         const deadlineIsNear = [];
         todos.forEach((todo) => {
-            if (todo.endDate > fiveDaysBeforeNow) {
+            const todoEndDate = new Date(todo.endDate);
+            if (tenDaysBeforeNow < todoEndDate && todoEndDate < now) {
                 deadlineIsNear.push(todo);
             }
         });
