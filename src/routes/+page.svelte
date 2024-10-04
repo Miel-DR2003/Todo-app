@@ -16,19 +16,22 @@
         });
         return Object.values(grouped);
     }
-    //probeer dit mss aan te passen door met een interval te werken date < deadline < today
     function checkDate(todos) {
-        const now = new Date();
-        const tenDaysBeforeNow = new Date();
-        tenDaysBeforeNow.setDate(now.getDate() - 10);
-        const deadlineIsNear = [];
-        todos.forEach((todo) => {
-            const todoEndDate = new Date(todo.endDate);
-            if (tenDaysBeforeNow < todoEndDate && todoEndDate < now) {
-                deadlineIsNear.push(todo);
-            }
+        const now = new Date(); // Current date and time in local time zone
+        const tenDaysAfterNow = new Date(now.getTime()); // Clone 'now' to avoid mutation
+        tenDaysAfterNow.setDate(now.getDate() + 10); // Add 10 days instead of subtracting
+
+        // Convert 'now' and 'tenDaysAfterNow' to UTC
+        const nowUTC = new Date(now.toISOString());
+        const tenDaysAfterNowUTC = new Date(tenDaysAfterNow.toISOString());
+
+        return todos.filter((todo) => {
+            const todoEndDate = new Date(todo.endDate); // Parse the todo's endDate
+            const todoEndDateUTC = new Date(todoEndDate.toISOString()); // Convert to UTC
+            return (
+                todoEndDateUTC >= nowUTC && todoEndDateUTC <= tenDaysAfterNowUTC
+            );
         });
-        return deadlineIsNear;
     }
 
     function showAlert(content) {
